@@ -44,7 +44,7 @@ result = combination(arr)
 # 최종 결과 값: 대피소를 설치하는 모든 방법 중 가장 가까운 대피소와 집 사이의 거리 중 가장 큰 값이 가장 작을 때의 거리
 min_value = INF
 for shelters in result:
-    # 각 집의 최소 거리들 중 가장 큰 값
+    # 각 집의 최소 거리들 중 가장 큰 값(N = K일 경우를 고려 하여 기본 값을 0으로 설정)
     max_dist = 0
     for home in arr:
         # 보호소로 지정된 집에 경우 continue
