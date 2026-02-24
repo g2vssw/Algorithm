@@ -45,7 +45,7 @@ result = combination(arr)
 min_value = INF
 for shelters in result:
     # 각 집의 최소 거리들 중 가장 큰 값
-    max_dist = -1
+    max_dist = 0
     for home in arr:
         # 보호소로 지정된 집에 경우 continue
         if home in shelters:
