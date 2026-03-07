@@ -16,7 +16,7 @@ def bfs(si, sj):
     count = 1
     while queue:
 
-        ci, cj = queue.pop()
+        ci, cj = queue.popleft()
 
         for k in range(4):
             ni, nj = ci + di[k], cj + dj[k]
@@ -29,7 +29,7 @@ def bfs(si, sj):
         return True
     return False
 
-def cheak():
+def check():
     for i in range(5):
         for j in range(5):
             if visited[i][j]:
@@ -39,20 +39,22 @@ def cheak():
                 else:
                     return False
 
-
 def dfs(n, cnt, s_cnt):
     global result
 
-    # 가지치기: 칠공주를 벌써 뽑았다면 더 이상 뽑지 않아도 괜찮음
-    if cnt > 7:
+    # 조기 종료: 7명이 모이면 즉시 확인 후 종료
+    if cnt == 7:
+        if s_cnt >= 4:
+            if check():
+                result += 1
+        return
+    
+    # 불가능한 경우 가지치기: 현재 다솜파 수 + 남은 자리 수가 4명 미만이면 종료
+    if s_cnt + (7 - cnt) < 4:
         return
 
+    # 끝에 도달하면
     if n == 25:
-        # 7명 그룹, 다솜파가 4명 이상인지 확인
-        if cnt == 7 and s_cnt >= 4:
-            # 인접해 있는지 확인하여 인접해 있다면 result += 1
-            if cheak():
-                result += 1
         return
 
     # 포함하는 경우
