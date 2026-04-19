@@ -1,5 +1,5 @@
 N, K = map(int, input().split())
-li = [0] * 1000001
+li = [0] * 4000001
 
 M = 0
 for _ in range(N):
