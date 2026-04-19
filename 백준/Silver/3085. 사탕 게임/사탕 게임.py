@@ -1,46 +1,58 @@
+def change(i, j):
+    global arr
+
+    for k in range(4):
+        ni, nj = i + di[k], j + dj[k]
+        if ni < 0 or ni >= N or nj < 0 or nj >= N:
+            continue
+        arr[i][j], arr[ni][nj] = arr[ni][nj], arr[i][j]
+        chk(arr)
+        arr[i][j], arr[ni][nj] = arr[ni][nj], arr[i][j]
+
+def chk(arr):
+    global result
+
+    for i in range(N):
+        S = 'A'
+        cnt = 0
+        for j in range(N):
+            if arr[i][j] != S:
+                result = max(result, cnt)
+                S = arr[i][j]
+                cnt = 0
+                cnt += 1
+            else:
+                cnt += 1
+
+        result = max(result, cnt)
+
+    for j in range(N):
+        S = 'A'
+        cnt = 0
+        for i in range(N):
+            if arr[i][j] != S:
+                result = max(result, cnt)
+                S = arr[i][j]
+                cnt = 0
+                cnt += 1
+            else:
+                cnt += 1
+
+        result = max(result, cnt)
+
+
+di = [-1, 0, 1, 0]
+dj = [0, 1, 0, -1]
+
 N = int(input())
+
 arr = [list(input()) for _ in range(N)]
-dy = [-1, 1, 0, 0]
-dx = [0, 0, -1, 1]
-max_cnt = 0
-V = [[0] * N for _ in range(N)]
-for y in range(N):
-    for x in range(N):
-        A = arr[y][x]
-        V[y][x] = 1
+result = 0
 
-        for k in range(4):
-            ny = y + dy[k]
-            nx = x + dx[k]
+for i in range(N):
+    for j in range(N):
+        if result == N:
+            break
+        change(i, j)
 
-            if 0 <= ny < N and 0 <= nx < N and arr[y][x] != arr[ny][nx] and V[ny][nx] == 0:
-                arr[y][x], arr[ny][nx] = arr[ny][nx], arr[y][x]
-
-                for l in range(N):
-                    w_cnt = 1
-                    for r in range(N - 1):
-                        if arr[l][r] == arr[l][r + 1]:
-                            w_cnt += 1
-                        elif arr[l][r] != arr[l][r + 1]:
-                            max_cnt = max(max_cnt, w_cnt)
-                            w_cnt = 1
-                    max_cnt = max(max_cnt, w_cnt)
-
-                    if max_cnt == N:
-                        break
-
-                for l in range(N):
-                    h_cnt = 1
-                    for r in range(N - 1):
-                        if arr[r][l] == arr[r + 1][l]:
-                            h_cnt += 1
-                        elif arr[r][l] != arr[r + 1][l]:
-                            max_cnt = max(max_cnt, h_cnt)
-                            h_cnt = 1
-                    max_cnt = max(max_cnt, h_cnt)
-
-                    if max_cnt == N:
-                        break
-
-                arr[y][x], arr[ny][nx] = arr[ny][nx], arr[y][x]
-print(max_cnt)
+print(result)
