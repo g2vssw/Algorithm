@@ -1,30 +1,34 @@
-def dfs(node):
-    if node == -19:
-        return
-
-    left = graph[node][0]
-    right = graph[node][1]
-
-    preorder.append(chr(node + 65))
-    dfs(left)
-    inorder.append(chr(node + 65))
-    dfs(right)
-    postorder.append(chr(node + 65))
-
 N = int(input())
-graph = [[] for _ in range(N)]
+tree = {}
 
-preorder = []
-inorder = []
-postorder = []
-for _ in range(N):
-    q, w, e = map(ord, input().split())
-    q, w, e = q - 65, w - 65, e - 65
-    graph[q].append(w)
-    graph[q].append(e)
+for n in range(N):
+    root, left, right = map(str, input().split())
+    tree[root] = [left, right]
 
-dfs(0)
 
-print("".join(preorder))
-print("".join(inorder))
-print("".join(postorder))
+def preorder(root):
+    if root != '.':
+        print(root, end='')  # root
+        preorder(tree[root][0])  # left
+        preorder(tree[root][1])  # right
+
+
+def inorder(root):
+    if root != '.':
+        inorder(tree[root][0])  # left
+        print(root, end='')  # root
+        inorder(tree[root][1])  # right
+
+
+def postorder(root):
+    if root != '.':
+        postorder(tree[root][0])  # left
+        postorder(tree[root][1])  # right
+        print(root, end='')  # root
+
+
+preorder('A')
+print()
+inorder('A')
+print()
+postorder('A')
