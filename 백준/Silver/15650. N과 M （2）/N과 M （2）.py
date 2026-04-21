@@ -6,9 +6,11 @@ def per(start):
     for i in range(start, N+1):
         if used[i]:
             continue
+        elif len(path) != 0 and path[-1] > i:
+            continue
         used[i] = True
         path.append(i)
-        per(i)
+        per(start + 1)
         path.pop()
         used[i] = False
 
