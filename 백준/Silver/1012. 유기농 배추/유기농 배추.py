@@ -1,5 +1,3 @@
-# 1012 유기농 배추
-
 def bfs(i, j):
     global cnt
 
@@ -12,7 +10,7 @@ def bfs(i, j):
     queue = [(i, j)]
 
     while queue:
-        i, j = queue.pop(0)
+        i, j = queue.pop()
 
         for k in range(4):
             ni, nj = i + di[k], j + dj[k]
