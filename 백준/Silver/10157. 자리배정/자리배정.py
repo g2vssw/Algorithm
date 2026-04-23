@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+from collections import deque
 
 C, R = map(int, input().split())
 K = int(input())
@@ -11,12 +12,17 @@ t = 0
 b = 0
 r = 0
 l = 0
-i, j, v = 0, 0, 1
+queue = deque([(0, 0, 1)])
 
 if C * R < K:
     print(0)
 else:
-    while True:
+    k = 0
+    c = 0
+    r = 0
+    while queue:
+        i, j, v = queue.popleft()
+
         if v == K:
             print(i + 1, j + 1)
             break
@@ -33,8 +39,9 @@ else:
             elif k == 3:
                 l += 1
             k = (k + 1) % 4
+            queue.append((i, j, v))
             continue
 
         else:
             v = v + 1
-            i, j = ni, nj
+            queue.append((ni, nj, v))
