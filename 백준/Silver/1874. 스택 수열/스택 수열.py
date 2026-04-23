@@ -1,11 +1,10 @@
-import sys
 from collections import deque
 
 N = int(input())
 
 li = deque()
 for _ in range(N):
-    n = int(sys.stdin.readline())
+    n = int(input())
     li.append(n)
 
 D = deque()
