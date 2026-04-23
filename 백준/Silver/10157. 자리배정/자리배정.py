@@ -1,45 +1,39 @@
+import sys
 from collections import deque
+input = sys.stdin.readline
 
 C, R = map(int, input().split())
 K = int(input())
 di = [0, 1, 0, -1]
 dj = [1, 0, -1, 0]
 
-k = 0
-t = 0
-b = 0
-r = 0
-l = 0
-queue = deque([(0, 0, 1)])
+arr = [[0] * R for _ in range(C)]
+arr[0][0] = 1
+queue = deque([(0, 0)])
 
 if C * R < K:
     print(0)
 else:
     k = 0
-    c = 0
-    r = 0
     while queue:
-        i, j, v = queue.popleft()
+        i, j = queue.popleft()
 
-        if v == K:
+        if arr[i][j] == K:
             print(i + 1, j + 1)
             break
-
+    
         ni, nj = i + di[k], j + dj[k]
 
-        if ni < 0 + t or ni >= C - b or nj < 0 + l or nj >= R - r:
-            if k == 0:
-                t += 1
-            elif k == 1:
-                r += 1
-            elif k == 2:
-                b += 1
-            elif k == 3:
-                l += 1
+        if ni < 0 or ni >= C or nj < 0 or nj >= R:
             k = (k + 1) % 4
-            queue.append((i, j, v))
+            queue.append((i, j))
             continue
 
-        else:
-            v = v + 1
-            queue.append((ni, nj, v))
+        elif arr[ni][nj] != 0:
+            k = (k + 1) % 4
+            queue.append((i, j))
+            continue
+
+        if arr[ni][nj] == 0:
+            arr[ni][nj] = arr[i][j] + 1
+            queue.append((ni, nj))
