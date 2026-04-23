@@ -13,9 +13,5 @@ while D:
     R.append(D.popleft())
 
 print("<", end="")
-for i in range(N):
-    if i < N-1:
-        print(R[i], end=', ')
-    else:
-        print(R[i], end="")
+print(*R, sep=", ", end="")
 print(">")
