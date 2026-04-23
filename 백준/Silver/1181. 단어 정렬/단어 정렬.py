@@ -1,14 +1,12 @@
-N = int(input())
-
-words = set()
-
-for _ in range(N):
-    word = input()
-    words.add(word)
-
-words = list(words)
-words.sort()
-words.sort(key=len)
-
-for w in words:
-    print(w)
+<html>
+<head><title>504 Gateway Time-out</title></head>
+<body>
+<center><h1>504 Gateway Time-out</h1></center>
+</body>
+</html>
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
