@@ -1,70 +1,48 @@
-import copy
-
-def bfs(start, q, arr):
-
-    queue = [start]
-    while queue:
-        i, j = queue.pop(0)
-
-        if (i, j) == end[q]:
-            return arr[i][j] - 1
-
-        for k in range(4):
-            ni, nj = i + di[k], j + dj[k]
-
-            if ni < 0 or ni >= l+1 or nj < 0 or nj >= w+1:
-                continue
-            elif arr[ni][nj] == 0:
-                continue
-            elif arr[ni][nj] == 1:
-                arr[ni][nj] = arr[i][j] + 1
-                queue.append((ni, nj))
-
-def trans(x, y):
-    if x == 1:
-        x = 0
-        y = y
-        return x, y
-    elif x == 2:
-        x = l
-        y = y
-        return x, y
-    elif x == 3:
-        x = y
-        y = 0
-        return x, y
-    elif x == 4:
-        x = y
-        y = w
-        return x, y
-
 w, l = map(int, input().split())
 N = int(input())
-end = []
-for _ in range(N):
-    x, y = map(int, input().split())
-    end.append(trans(x, y))
-x, y = tuple(map(int, input().split()))
-start = trans(x, y)
+end = [tuple(map(int, input().split())) for _ in range(N)]
+start = tuple(map(int, input().split()))
 
-di = [-1, 0, 1, 0]
-dj = [0, 1, 0, -1]
+total = 0
+for i in range(N):
+    if start[0] == 1:
+        if end[i][0] == 1:
+            total += abs(start[1] - end[i][1])
+        elif end[i][0] == 2:
+            total += min(start[1] + end[i][1], w * 2 - end[i][1] - start[1]) + l
+        elif end[i][0] == 3:
+            total += end[i][1] + start[1]
+        elif end[i][0] == 4:
+            total += end[i][1] + w - start[1]
 
-arr = [list(0 for _ in range(w+1)) for _ in range(l+1)]
+    elif start[0] == 2:
+        if end[i][0] == 1:
+            total += min(start[1] + end[i][1], w * 2 - end[i][1] - start[1]) + l
+        elif end[i][0] == 2:
+            total += abs(start[1] - end[i][1])
+        elif end[i][0] == 3:
+            total += l - end[i][1] + start[1]
+        elif end[i][0] == 4:
+            total += l - end[i][1] + w - start[1]
 
-for i in range(w+1):
-    arr[0][i] = 1
-    arr[-1][i] = 1
-for j in range(l+1):
-    arr[j][0] = 1
-    arr[j][-1] = 1
+    elif start[0] == 3:
+        if end[i][0] == 1:
+            total += end[i][1] + start[1]
+        elif end[i][0] == 2:
+            total += l - start[1] + end[i][1]
+        elif end[i][0] == 3:
+            total += abs(start[1] - end[i][1])
+        elif end[i][0] == 4:
+            total += min(start[1] + end[i][1], l * 2 - end[i][1] - start[1]) + w
 
-result = 0
-for q in range(N):
-    arr2 = copy.deepcopy(arr)
-    value = bfs(start, q, arr2)
+    elif start[0] == 4:
+        if end[i][0] == 1:
+            total += w - end[i][1] + start[1]
+        elif end[i][0] == 2:
+            total += w - end[i][1] + start[1]
+        elif end[i][0] == 3:
+            total += min(start[1] + end[i][1], l * 2 - end[i][1] - start[1]) + w
+        elif end[i][0] == 4:
+            total += abs(start[1] - end[i][1])
 
-    if value is not None:  # None이 아닐 때만 더하기
-        result += value
-
-print(result)
+print(total)
