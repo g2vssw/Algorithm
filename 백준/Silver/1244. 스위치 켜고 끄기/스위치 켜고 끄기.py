@@ -1,32 +1,29 @@
-def switch(s):
-    global li
-    if li[s] == 1:
-        li[s] = 0
-    else:
-        li[s] = 1
-
+#스위치의 갯수
+numbers = int(input())
+# 스위치 상태
+switch = list(map(int, input().split()))
+# 학생 수
 N = int(input())
-li = list(map(int, input().split()))
-S_N = int(input())
 
-for _ in range(S_N):
-    G, T = map(int, input().split())
-
-    if G == 1:
-        for i in range(T-1, N, T):
-            switch(i)
-    else:
-        switch(T-1)
-        for i in range(1, N):
-            if T-1-i < 0 or T-1+i >= N:
-                continue
-            elif li[T - 1 - i] == li[T - 1 + i]:
-                switch(T - 1 - i)
-                switch(T - 1 + i)
+for n in range(N):
+    #성별, 기준점
+    sex, num = map(int, input().split())
+    if sex == 1:
+        for x in range(num-1, numbers, num):
+            switch[x] = 1 - switch[x]
+    elif sex == 2:
+        num -= 1
+        switch[num] = 1 - switch[num]
+        a = 1
+        while num-a >= 0 and num+a < numbers:
+            if switch[num-a] == switch[num+a]:
+                switch[num-a] = 1 - switch[num-a]
+                switch[num+a] = 1 - switch[num+a]
+                a += 1
             else:
                 break
 
-for i in range(N):
-    print(li[i], end=' ')
+for i in range(numbers):
+    print(switch[i], end=" ")
     if i % 20 == 19:
         print()
