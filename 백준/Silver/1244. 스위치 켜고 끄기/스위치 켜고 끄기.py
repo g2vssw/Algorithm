@@ -1,29 +1,36 @@
-#스위치의 갯수
-numbers = int(input())
-# 스위치 상태
-switch = list(map(int, input().split()))
-# 학생 수
 N = int(input())
+switch = list(map(int, input().split()))
+stu_num = int(input())
 
-for n in range(N):
-    #성별, 기준점
-    sex, num = map(int, input().split())
-    if sex == 1:
-        for x in range(num-1, numbers, num):
-            switch[x] = 1 - switch[x]
-    elif sex == 2:
-        num -= 1
-        switch[num] = 1 - switch[num]
-        a = 1
-        while num-a >= 0 and num+a < numbers:
-            if switch[num-a] == switch[num+a]:
-                switch[num-a] = 1 - switch[num-a]
-                switch[num+a] = 1 - switch[num+a]
-                a += 1
+for _ in range(stu_num):
+    G, T = map(int, input().split())
+
+    if G == 1:
+        for i in range(T-1, N, T):
+            if switch[i] == 0:
+                switch[i] = 1
+            else:
+                switch[i] = 0
+    else:
+        if switch[T-1] == 0:
+            switch[T-1] = 1
+        else:
+            switch[T-1] = 0
+
+        for i in range(1, N // 2):
+            if T - 1 - i < 0 or T - 1 + i >= N:
+                continue
+            elif switch[T - 1 - i] == switch[T - 1 + i]:
+                if switch[T - 1 - i] == 0:
+                    switch[T - 1 - i] = 1
+                    switch[T - 1 + i] = 1
+                else:
+                    switch[T - 1 - i] = 0
+                    switch[T - 1 + i] = 0
             else:
                 break
 
-for i in range(numbers):
+for i in range(N):
     print(switch[i], end=" ")
     if i % 20 == 19:
         print()
