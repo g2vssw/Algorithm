@@ -1,5 +1,6 @@
 def solution(points, routes):
     answer = 0
+    
     paths = []
     max_time = -1
     
